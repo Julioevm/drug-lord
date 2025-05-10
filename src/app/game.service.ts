@@ -3,10 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 import { GameState, Player, Drug, Upgrade, Location, GameEvent } from './models/game.models';
 
 const INITIAL_DRUGS: Drug[] = [
-  { id: 'weed', name: 'Weed', basePrice: 100, quantity: 0 },
-  { id: 'coke', name: 'Cocaine', basePrice: 1000, quantity: 0 },
-  { id: 'heroin', name: 'Heroin', basePrice: 800, quantity: 0 },
-  { id: 'acid', name: 'Acid', basePrice: 300, quantity: 0 }
+  { id: 'weed', name: 'Weed', basePrice: 100, price: 100, quantity: 0 },
+  { id: 'coke', name: 'Cocaine', basePrice: 1000, price: 1000, quantity: 0 },
+  { id: 'heroin', name: 'Heroin', basePrice: 800, price: 800, quantity: 0 },
+  { id: 'acid', name: 'Acid', basePrice: 300, price: 300, quantity: 0 }
 ];
 
 const INITIAL_UPGRADES: Upgrade[] = [
@@ -26,6 +26,8 @@ const INITIAL_PLAYER: Player = {
   upgrades: [],
   location: 'downtown',
   maxInventory: 20,
+  inventoryLimit: 20,
+  notoriety: 0,
   timeUnits: 6
 };
 
@@ -60,6 +62,42 @@ export class GameService {
   spendTime(units: number) {
     const player = { ...this.getPlayer(), timeUnits: this.getPlayer().timeUnits - units };
     this.updatePlayer(player);
+  }
+
+  /**
+   * Randomize drug prices (fluctuate +/- 30% from base)
+   */
+  randomizeDrugPrices() {
+    const drugs = this.gameState$.value.drugs.map(drug => {
+      const fluctuation = 0.7 + Math.random() * 0.6; // 0.7 to 1.3
+      return { ...drug, price: Math.round(drug.basePrice * fluctuation) };
+    });
+    const state = { ...this.gameState$.value, drugs };
+    this.gameState$.next(state);
+  }
+
+  /**
+   * Attempt to buy a drug. Enforces inventory limit and increases notoriety.
+   */
+  buyDrug(drugId: string, amount: number): { success: boolean; error?: string } {
+    const state = this.gameState$.value;
+    const player = { ...state.player };
+    const drug = state.drugs.find(d => d.id === drugId);
+    if (!drug) return { success: false, error: 'Drug not found.' };
+    const totalInventory = Object.values(player.inventory).reduce((a, b) => a + b, 0);
+    if (totalInventory + amount > player.inventoryLimit) {
+      return { success: false, error: 'Not enough inventory space.' };
+    }
+    const totalCost = drug.price * amount;
+    if (player.cleanMoney < totalCost) {
+      return { success: false, error: 'Not enough money.' };
+    }
+    // Update inventory, money, notoriety
+    player.inventory[drugId] = (player.inventory[drugId] || 0) + amount;
+    player.cleanMoney -= totalCost;
+    player.notoriety += amount; // 1 notoriety per drug bought
+    this.updatePlayer(player);
+    return { success: true };
   }
 
   nextDay() {

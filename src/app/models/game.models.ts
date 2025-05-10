@@ -4,6 +4,7 @@ export interface Drug {
   id: string;
   name: string;
   basePrice: number;
+  price: number; // Current fluctuating price
   quantity: number;
 }
 
@@ -29,6 +30,8 @@ export interface Player {
   location: string;
   maxInventory: number;
   timeUnits: number;
+  notoriety: number;
+  inventoryLimit: number; // For upgradeable inventory
 }
 
 export interface GameEvent {

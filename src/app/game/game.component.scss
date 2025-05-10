@@ -1,0 +1,81 @@
+.dark-theme {
+  background: #181a20;
+  color: #f1f1f1;
+  min-height: 100vh;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  padding: 0;
+}
+
+.summary-screen, .market-screen {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #22232b;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px #000c 0.2;
+  padding: 2rem 2.5rem;
+}
+
+.player-summary div {
+  margin-bottom: 0.6rem;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+button {
+  background: #2b3245;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7em 1.4em;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:hover, .back-btn:hover {
+  background: #4b5b7c;
+}
+.back-btn {
+  margin-bottom: 1.2rem;
+  background: #23283a;
+  color: #c7cfff;
+}
+
+/* Table styling for market */
+table {
+  width: 100%;
+  background: #23243a;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 0.7em 0.5em;
+  text-align: left;
+}
+th {
+  background: #282c36;
+  color: #b7c0d6;
+}
+td {
+  border-bottom: 1px solid #2e3140;
+}
+tr:last-child td {
+  border-bottom: none;
+}
+input[type="number"] {
+  background: #191c24;
+  color: #f1f1f1;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 0.3em 0.6em;
+  width: 60px;
+}
+.error {
+  color: #ff5e5e;
+  margin-bottom: 1rem;
+}

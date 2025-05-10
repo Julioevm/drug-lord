@@ -1,1 +1,30 @@
-<p>market works!</p>
+<div *ngIf="player">
+  <h3>Market</h3>
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Drug</th>
+        <th>Price</th>
+        <th>Owned</th>
+        <th>Buy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let drug of drugs">
+        <td>{{ drug.name }}</td>
+        <td>${{ drug.price }}</td>
+        <td>{{ player.inventory[drug.id] || 0 }}</td>
+        <td>
+          <input #amount type="number" min="1" style="width:60px;" />
+          <button (click)="buyDrug(drug.id, amount.valueAsNumber); amount.value=''">Buy</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="player-stats">
+    <p><strong>Clean Money:</strong> ${{ player.cleanMoney }}</p>
+    <p><strong>Notoriety:</strong> {{ player.notoriety }}</p>
+    <p><strong>Inventory:</strong> {{ (player.inventory | valuesSum) }}/{{ player.inventoryLimit }}</p>
+  </div>
+</div>
