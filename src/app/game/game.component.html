@@ -1,28 +1,26 @@
-<div class="dark-theme">
-  <div *ngIf="player">
-    <ng-container [ngSwitch]="viewMode">
-      <!-- Summary Screen -->
-      <div *ngSwitchCase="'summary'" class="summary-screen">
-        <h2>Drug Wars</h2>
-        <div class="player-summary">
-          <div><strong>Day:</strong> {{ day }}</div>
-          <div><strong>Location:</strong> {{ player.location }}</div>
-          <div><strong>Clean Money:</strong> ${{ player.cleanMoney }}</div>
-          <div><strong>Dirty Money:</strong> ${{ player.dirtyMoney }}</div>
-          <div><strong>Notoriety:</strong> {{ player.notoriety }}</div>
-          <div><strong>Inventory:</strong> {{ (player.inventory | valuesSum) }}/{{ player.inventoryLimit }}</div>
-          <div><strong>Time Units Left:</strong> {{ player.timeUnits }}</div>
-        </div>
-        <div class="actions">
-          <button (click)="gotoMarket()">Go to Market</button>
-          <!-- Add more actions here -->
-        </div>
+<div *ngIf="player">
+  <ng-container [ngSwitch]="viewMode">
+    <!-- Summary Screen -->
+    <div *ngSwitchCase="'summary'" class="summary-screen">
+      <h2>Drug Wars</h2>
+      <div class="player-summary">
+        <div><strong>Day:</strong> {{ day }}</div>
+        <div><strong>Location:</strong> {{ player.location }}</div>
+        <div><strong>Clean Money:</strong> ${{ player.cleanMoney }}</div>
+        <div><strong>Dirty Money:</strong> ${{ player.dirtyMoney }}</div>
+        <div><strong>Notoriety:</strong> {{ player.notoriety }}</div>
+        <div><strong>Inventory:</strong> {{ (player.inventory | valuesSum) }}/{{ player.inventoryLimit }}</div>
+        <div><strong>Time Units Left:</strong> {{ player.timeUnits }}</div>
       </div>
-      <!-- Market Screen -->
-      <div *ngSwitchCase="'market'" class="market-screen">
-        <button class="back-btn" (click)="gotoSummary()">&larr; Back to Summary</button>
-        <app-market></app-market>
+      <div class="actions">
+        <button (click)="gotoMarket()">Go to Market</button>
+        <!-- Add more actions here -->
       </div>
-    </ng-container>
-  </div>
+    </div>
+    <!-- Market Screen -->
+    <div *ngSwitchCase="'market'" class="market-screen">
+      <button class="back-btn" (click)="gotoSummary()">&larr; Back to Summary</button>
+      <app-market></app-market>
+    </div>
+  </ng-container>
 </div>
