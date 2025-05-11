@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { GameService } from '../game.service';
 import { Drug, Player } from '../models/game.models';
 import { ValuesSumPipe } from '../pipes/values-sum.pipe';
+import { QuantityInputComponent } from '../ui/quantity-input/quantity-input.component';
 
 @Component({
   selector: 'app-market',
   standalone: true,
-  imports: [CommonModule, ValuesSumPipe],
+  imports: [CommonModule, ValuesSumPipe, QuantityInputComponent],
   templateUrl: './market.component.html',
   styleUrls: ['./market.component.scss']
 })

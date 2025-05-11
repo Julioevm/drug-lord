@@ -16,8 +16,8 @@
         <td>${{ drug.price }}</td>
         <td>{{ player.inventory[drug.id] || 0 }}</td>
         <td>
-          <input #amount type="number" min="1" style="width:60px;" />
-          <button (click)="buyDrug(drug.id, amount.valueAsNumber); amount.value=''">Buy</button>
+          <app-quantity-input [value]="drug.amount || 1" [min]="1" (valueChange)="drug.amount = $event"></app-quantity-input>
+          <button (click)="buyDrug(drug.id, drug.amount || 1)">Buy</button>
         </td>
       </tr>
     </tbody>

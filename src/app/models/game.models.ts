@@ -6,6 +6,7 @@ export interface Drug {
   basePrice: number;
   price: number; // Current fluctuating price
   quantity: number;
+  amount?: number; // UI only: selected buy amount
 }
 
 export interface Upgrade {
