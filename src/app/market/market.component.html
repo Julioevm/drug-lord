@@ -1,6 +1,18 @@
 <div *ngIf="player">
   <h3>Market</h3>
   <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+
+  <div class="money-toggle">
+    <label>
+      <input type="radio" name="payWith" value="dirty" [(ngModel)]="payWith" (change)="setPayWith('dirty')" />
+      Dirty Money (${{ availableDirtyMoney }})
+    </label>
+    <label>
+      <input type="radio" name="payWith" value="clean" [(ngModel)]="payWith" (change)="setPayWith('clean')" />
+      Clean Money (${{ availableCleanMoney }})
+    </label>
+  </div>
+
   <table>
     <thead>
       <tr>
@@ -16,14 +28,26 @@
         <td>${{ drug.price }}</td>
         <td>{{ player.inventory[drug.id] || 0 }}</td>
         <td>
-          <app-quantity-input [value]="drug.amount || 1" [min]="1" (valueChange)="drug.amount = $event"></app-quantity-input>
-          <button (click)="buyDrug(drug.id, drug.amount || 1)">Buy</button>
+          <app-quantity-input [value]="drug.amount || 0" [min]="0" (valueChange)="drug.amount = $event"></app-quantity-input>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <div class="totals">
+    <span [ngClass]="{ 'over-limit': overMoney }">Total Cost: ${{ totalCost }}</span>
+    <span [ngClass]="{ 'over-limit': overSpace }">Total Quantity: {{ totalAmount }}</span>
+  </div>
+
+  <button 
+    (click)="buyAll()" 
+    [disabled]="!canBuy"
+    class="buy-btn"
+  >Buy Selected</button>
+
   <div class="player-stats">
     <p><strong>Clean Money:</strong> ${{ player.cleanMoney }}</p>
+    <p><strong>Dirty Money:</strong> ${{ player.dirtyMoney }}</p>
     <p><strong>Notoriety:</strong> {{ player.notoriety }}</p>
     <p><strong>Inventory:</strong> {{ (player.inventory | valuesSum) }}/{{ player.inventoryLimit }}</p>
   </div>

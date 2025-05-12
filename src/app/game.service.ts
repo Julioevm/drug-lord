@@ -78,8 +78,16 @@ export class GameService {
 
   /**
    * Attempt to buy a drug. Enforces inventory limit and increases notoriety.
+   * Uses clean money by default for backward compatibility.
    */
   buyDrug(drugId: string, amount: number): { success: boolean; error?: string } {
+    return this.buyDrugWithType(drugId, amount, 'clean');
+  }
+
+  /**
+   * Attempt to buy a drug with either clean or dirty money.
+   */
+  buyDrugWithType(drugId: string, amount: number, type: 'clean' | 'dirty'): { success: boolean; error?: string } {
     const state = this.gameState$.value;
     const player = { ...state.player };
     const drug = state.drugs.find(d => d.id === drugId);
@@ -89,12 +97,19 @@ export class GameService {
       return { success: false, error: 'Not enough inventory space.' };
     }
     const totalCost = drug.price * amount;
-    if (player.cleanMoney < totalCost) {
-      return { success: false, error: 'Not enough money.' };
+    if (type === 'clean') {
+      if (player.cleanMoney < totalCost) {
+        return { success: false, error: 'Not enough clean money.' };
+      }
+      player.cleanMoney -= totalCost;
+    } else {
+      if (player.dirtyMoney < totalCost) {
+        return { success: false, error: 'Not enough dirty money.' };
+      }
+      player.dirtyMoney -= totalCost;
     }
     // Update inventory, money, notoriety
     player.inventory[drugId] = (player.inventory[drugId] || 0) + amount;
-    player.cleanMoney -= totalCost;
     player.notoriety += amount; // 1 notoriety per drug bought
     this.updatePlayer(player);
     return { success: true };

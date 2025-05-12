@@ -1,14 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { GameService } from '../game.service';
 import { Drug, Player } from '../models/game.models';
 import { ValuesSumPipe } from '../pipes/values-sum.pipe';
 import { QuantityInputComponent } from '../ui/quantity-input/quantity-input.component';
 
+// Extend GameService to support dirty/clean money buying
+// You will also need to update GameService accordingly.
+
 @Component({
   selector: 'app-market',
   standalone: true,
-  imports: [CommonModule, ValuesSumPipe, QuantityInputComponent],
+  imports: [CommonModule, FormsModule, ValuesSumPipe, QuantityInputComponent],
   templateUrl: './market.component.html',
   styleUrls: ['./market.component.scss']
 })
@@ -16,6 +20,7 @@ export class MarketComponent {
   drugs: Drug[] = [];
   player: Player | null = null;
   errorMsg: string = '';
+  payWith: 'dirty' | 'clean' = 'dirty';
 
   constructor(private gameService: GameService) {
     this.gameService.getGameState().subscribe(state => {
@@ -24,16 +29,65 @@ export class MarketComponent {
     });
   }
 
-  buyDrug(drugId: string, amount: number) {
-    if (!amount || amount <= 0) {
-      this.errorMsg = 'Enter a valid amount.';
-      return;
+  setPayWith(type: 'dirty' | 'clean') {
+    this.payWith = type;
+  }
+
+  get totalCost(): number {
+    return this.drugs.reduce((sum, drug) => sum + (drug.amount ? drug.amount * drug.price : 0), 0);
+  }
+
+  get totalAmount(): number {
+    return this.drugs.reduce((sum, drug) => sum + (drug.amount ? drug.amount : 0), 0);
+  }
+
+  get availableMoney(): number {
+    if (!this.player) return 0;
+    return this.payWith === 'dirty' ? this.player.dirtyMoney : this.player.cleanMoney;
+  }
+
+  get availableCleanMoney(): number {
+    return this.player ? this.player.cleanMoney : 0;
+  }
+
+  get availableDirtyMoney(): number {
+    return this.player ? this.player.dirtyMoney : 0;
+  }
+
+  get freeSpace(): number {
+    if (!this.player) return 0;
+    const used = Object.values(this.player.inventory).reduce((a, b) => a + b, 0);
+    return this.player.inventoryLimit - used;
+  }
+
+  get overMoney(): boolean {
+    return this.totalCost > this.availableMoney;
+  }
+
+  get overSpace(): boolean {
+    return this.totalAmount > this.freeSpace;
+  }
+
+  get canBuy(): boolean {
+    return this.totalCost > 0 && !this.overMoney && !this.overSpace;
+  }
+
+  buyAll() {
+    if (!this.player) return;
+    if (!this.canBuy) return;
+    // For each drug, buy the selected amount
+    let error = '';
+    for (const drug of this.drugs) {
+      if (drug.amount && drug.amount > 0) {
+        const result = this.gameService.buyDrugWithType(drug.id, drug.amount, this.payWith);
+        if (!result.success) {
+          error = result.error || 'Could not buy ' + drug.name;
+          break;
+        }
+        drug.amount = 0; // Reset selection after buying
+      }
     }
-    const result = this.gameService.buyDrug(drugId, amount);
-    if (!result.success) {
-      this.errorMsg = result.error || 'Could not buy drug.';
-    } else {
-      this.errorMsg = '';
-    }
+    this.errorMsg = error;
   }
 }
+
