@@ -14,9 +14,41 @@ const INITIAL_UPGRADES: Upgrade[] = [
 ];
 
 const INITIAL_LOCATIONS: Location[] = [
-  { id: 'downtown', name: 'Downtown', description: 'Busy city center' },
-  { id: 'suburbs', name: 'Suburbs', description: 'Quieter area' },
-  { id: 'docks', name: 'Docks', description: 'Shady deals happen here' }
+  {
+    id: 'downtown',
+    name: 'Downtown',
+    description: 'The business and entertainment hub. High-end clientele, lots of police patrols.',
+    demandMultipliers: { quality: 1.5, cheap: 0.5 },
+    policeHeat: 80,
+  },
+  {
+    id: 'slums',
+    name: 'Slums',
+    description: 'Poorer area with high demand for cheap drugs, low police presence.',
+    demandMultipliers: { quality: 0.5, cheap: 1.5 },
+    policeHeat: 30,
+  },
+  {
+    id: 'suburbs',
+    name: 'Suburbs',
+    description: 'Middle-class families, moderate police presence.',
+    demandMultipliers: { quality: 1.0, cheap: 1.0 },
+    policeHeat: 50,
+  },
+  {
+    id: 'university',
+    name: 'University',
+    description: 'Young crowd, high demand for party drugs, some police patrols.',
+    demandMultipliers: { quality: 1.2, cheap: 1.1 },
+    policeHeat: 60,
+  },
+  {
+    id: 'industrial',
+    name: 'Industrial District',
+    description: 'Factories and warehouses. Few police, but low demand.',
+    demandMultipliers: { quality: 0.7, cheap: 0.8 },
+    policeHeat: 20,
+  }
 ];
 
 const INITIAL_PLAYER: Player = {
@@ -45,6 +77,22 @@ const INITIAL_STATE: GameState = {
 })
 export class GameService {
   private gameState$ = new BehaviorSubject<GameState>({ ...INITIAL_STATE });
+
+  /**
+   * Move the player to a new location if they have enough time units (TU).
+   * Deducts 1 TU and updates the player's location.
+   * Returns { success: boolean, error?: string }
+   */
+  movePlayer(locationId: string): { success: boolean; error?: string } {
+    const player = { ...this.getPlayer() };
+    if (player.timeUnits < 1) {
+      return { success: false, error: 'Not enough Time Units (TU) to move.' };
+    }
+    player.location = locationId;
+    player.timeUnits -= 1;
+    this.updatePlayer(player);
+    return { success: true };
+  }
 
   getGameState() {
     return this.gameState$.asObservable();

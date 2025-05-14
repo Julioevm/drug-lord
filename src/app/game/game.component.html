@@ -14,6 +14,7 @@
       </div>
       <div class="actions">
         <button (click)="gotoMarket()">Go to Market</button>
+        <button (click)="gotoMap()">Map</button>
         <!-- Add more actions here -->
       </div>
     </div>
@@ -21,6 +22,11 @@
     <div *ngSwitchCase="'market'" class="market-screen">
       <button class="back-btn" (click)="gotoSummary()">&larr; Back to Summary</button>
       <app-market></app-market>
+    </div>
+    <!-- Map Screen -->
+    <div *ngSwitchCase="'map'" class="map-screen">
+      <button class="back-btn" (click)="gotoSummary()">&larr; Back to Summary</button>
+      <app-map></app-map>
     </div>
   </ng-container>
 </div>

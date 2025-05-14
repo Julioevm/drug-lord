@@ -1,1 +1,29 @@
-<p>map works!</p>
+<div class="city-map">
+  <h2>City Map</h2>
+  <div class="locations-list">
+    <button *ngFor="let loc of locations" class="location-btn" (click)="onLocationClick(loc)">
+      <strong>{{ loc.name }}</strong>
+      <div>{{ loc.description }}</div>
+      <div>Demand: Quality x{{ loc.demandMultipliers['quality'] }}, Cheap x{{ loc.demandMultipliers['cheap'] }}</div>
+      <div>Police Heat: {{ loc.policeHeat }}</div>
+    </button>
+  </div>
+</div>
+
+<!-- Hidden trigger for dialog -->
+<button #dialogTrigger style="display:none" [ngpDialogTrigger]="dialog"></button>
+
+<ng-template #dialog let-close="close">
+  <div ngpDialogOverlay>
+    <div ngpDialog>
+      <h3 ngpDialogTitle>Move to {{ selectedLocation?.name }}?</h3>
+      <p ngpDialogDescription>This will cost you 1 Time Unit (TU).</p>
+      <p>{{ selectedLocation?.description }}</p>
+      <div *ngIf="error" class="error">{{ error }}</div>
+      <div style="display: flex; gap: 1.2rem; margin-top: 1.1rem;">
+        <button (click)="confirmMove(close)">Confirm</button>
+        <button (click)="cancelMove(close)">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

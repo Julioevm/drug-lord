@@ -3,19 +3,20 @@ import { CommonModule } from '@angular/common';
 import { GameService } from '../game.service';
 import { Player } from '../models/game.models';
 import { MarketComponent } from '../market/market.component';
+import { MapComponent } from '../map/map.component';
 import { ValuesSumPipe } from '../pipes/values-sum.pipe';
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, MarketComponent, ValuesSumPipe],
+  imports: [CommonModule, MarketComponent, MapComponent, ValuesSumPipe],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
   player: Player | null = null;
   day: number = 1;
-  viewMode: 'summary' | 'market' = 'summary';
+  viewMode: 'summary' | 'market' | 'map' = 'summary';
 
   constructor(private gameService: GameService) {}
 
@@ -32,6 +33,10 @@ export class GameComponent implements OnInit {
 
   gotoSummary() {
     this.viewMode = 'summary';
+  }
+
+  gotoMap() {
+    this.viewMode = 'map';
   }
 }
 
