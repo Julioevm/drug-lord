@@ -9,6 +9,11 @@ We can use angularprimitives to leverage more complex components out of the box,
 
 The application is an SPA video game based on the basic Drug Wars game where you buys and sell drugs.
 
+### Styling
+
+Try to use variables and styles on styles folder and the main style.scss instead of duplicating values in scss files.
+
+
 ## Game Overview
 
 ### Screens
