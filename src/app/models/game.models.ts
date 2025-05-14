@@ -63,11 +63,11 @@ export const LOCATIONS: Location[] = [
       ecstasy: 0.2    // Low demand
     },
     priceMarkup: {
-      weed: 0.8,      // 20% discount
-      cocaine: 0.7,    // 30% discount
-      heroin: 0.9,     // 10% discount
-      meth: 1.0,       // Normal price
-      ecstasy: 0.6     // 40% discount
+      weed: 1.1,      // 10% markup (lowest, no discount)
+      cocaine: 1.1,   // 10% markup
+      heroin: 1.1,    // 10% markup
+      meth: 1.15,     // 15% markup
+      ecstasy: 1.1    // 10% markup
     },
     policeHeat: 30,
   },
@@ -123,11 +123,11 @@ export const LOCATIONS: Location[] = [
       ecstasy: 0.3    // Low demand
     },
     priceMarkup: {
-      weed: 0.9,      // 10% discount
-      cocaine: 0.8,    // 20% discount
-      heroin: 1.0,     // Normal price
+      weed: 1.05,      // 5% markup (was 10% discount)
+      cocaine: 1.05,   // 5% markup (was 20% discount)
+      heroin: 1.05,    // 5% markup (was 1.0)
       meth: 1.2,       // 20% markup
-      ecstasy: 0.8     // 20% discount
+      ecstasy: 1.05    // 5% markup (was 20% discount)
     },
     policeHeat: 20,
   }
