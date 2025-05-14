@@ -26,7 +26,7 @@
     <!-- Map Screen -->
     <div *ngSwitchCase="'map'" class="map-screen">
       <button class="back-btn" (click)="gotoSummary()">&larr; Back to Summary</button>
-      <app-map></app-map>
+      <app-map (moveConfirmed)="gotoSummary()"></app-map>
     </div>
   </ng-container>
 </div>

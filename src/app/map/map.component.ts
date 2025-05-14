@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Location, LOCATIONS } from '../models/game.models';
 import { GameService } from '../game.service';
@@ -18,8 +18,6 @@ import { NgpDialog, NgpDialogTitle, NgpDialogDescription, NgpDialogTrigger, NgpD
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-import { Output, EventEmitter } from '@angular/core';
-
 export class MapComponent {
   locations: Location[] = LOCATIONS;
   selectedLocation: Location | null = null;
