@@ -18,12 +18,15 @@ import { NgpDialog, NgpDialogTitle, NgpDialogDescription, NgpDialogTrigger, NgpD
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
+import { Output, EventEmitter } from '@angular/core';
+
 export class MapComponent {
   locations: Location[] = LOCATIONS;
   selectedLocation: Location | null = null;
   error: string | null = null;
 
   @ViewChild('dialogTrigger', { static: false }) dialogTrigger!: ElementRef<HTMLButtonElement>;
+  @Output() moveConfirmed = new EventEmitter<void>();
 
   constructor(private gameService: GameService) {}
 
@@ -47,6 +50,7 @@ export class MapComponent {
     }
     this.selectedLocation = null;
     this.error = null;
+    this.moveConfirmed.emit();
     if (close) close();
   }
 
@@ -56,3 +60,4 @@ export class MapComponent {
     if (close) close();
   }
 }
+
