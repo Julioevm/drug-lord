@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { GameState, Player, Drug, Upgrade, Location, GameEvent } from './models/game.models';
+import { GameState, Player, Drug, Upgrade, Location, GameEvent, LOCATIONS } from './models/game.models';
 
 const INITIAL_DRUGS: Drug[] = [
   { id: 'weed', name: 'Weed', basePrice: 100, price: 100, quantity: 0 },
@@ -11,44 +11,6 @@ const INITIAL_DRUGS: Drug[] = [
 
 const INITIAL_UPGRADES: Upgrade[] = [
   { id: 'backpack', name: 'Backpack', description: 'Increase inventory by 10', cost: 500, effect: 'inventory+10' }
-];
-
-const INITIAL_LOCATIONS: Location[] = [
-  {
-    id: 'downtown',
-    name: 'Downtown',
-    description: 'The business and entertainment hub. High-end clientele, lots of police patrols.',
-    demandMultipliers: { quality: 1.5, cheap: 0.5 },
-    policeHeat: 80,
-  },
-  {
-    id: 'slums',
-    name: 'Slums',
-    description: 'Poorer area with high demand for cheap drugs, low police presence.',
-    demandMultipliers: { quality: 0.5, cheap: 1.5 },
-    policeHeat: 30,
-  },
-  {
-    id: 'suburbs',
-    name: 'Suburbs',
-    description: 'Middle-class families, moderate police presence.',
-    demandMultipliers: { quality: 1.0, cheap: 1.0 },
-    policeHeat: 50,
-  },
-  {
-    id: 'university',
-    name: 'University',
-    description: 'Young crowd, high demand for party drugs, some police patrols.',
-    demandMultipliers: { quality: 1.2, cheap: 1.1 },
-    policeHeat: 60,
-  },
-  {
-    id: 'industrial',
-    name: 'Industrial District',
-    description: 'Factories and warehouses. Few police, but low demand.',
-    demandMultipliers: { quality: 0.7, cheap: 0.8 },
-    policeHeat: 20,
-  }
 ];
 
 const INITIAL_PLAYER: Player = {
@@ -68,7 +30,7 @@ const INITIAL_STATE: GameState = {
   day: 1,
   drugs: INITIAL_DRUGS,
   upgrades: INITIAL_UPGRADES,
-  locations: INITIAL_LOCATIONS,
+  locations: LOCATIONS,
   events: []
 };
 

@@ -1,34 +1,61 @@
 <div class="dealing-container">
   <h2>Dealing</h2>
   <div *ngIf="location">
-    <div><strong>Location:</strong> {{ location?.name }}</div>
+    <div><strong>Location:</strong> {{ location.name }}</div>
     <div><strong>Police Activity:</strong> {{ policeHeat }}</div>
   </div>
   <div><strong>Time Units Left:</strong> {{ timeUnits }}</div>
-  <form>
-    <table class="drugs-table">
+  <div *ngIf="drugs.length === 0" class="no-drugs-message">
+    <p>You don't have any drugs to sell. Visit the market to stock up!</p>
+  </div>
+
+  <ng-container *ngIf="drugs.length > 0">
+    <form>
+      <table class="drugs-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Drug</th>
+            <th>Price</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let drug of drugs">
+            <td>
+              <input type="checkbox" #cb [checked]="selectedDrugIds.has(drug.id)" (change)="toggleDrug(drug.id, cb.checked)" />
+            </td>
+            <td>{{ drug.name }}</td>
+            <td>{{ getSalePrice(drug) | number:'1.0-2' }}</td>
+            <td>{{ drug.quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    <div class="actions">
+      <button type="button" (click)="onDeal()">Deal</button>
+    </div>
+  </ng-container>
+
+  <div *ngIf="dealResult" class="deal-summary">
+    <h3>Deal Summary</h3>
+    <table class="buyers-table">
       <thead>
         <tr>
-          <th></th>
           <th>Drug</th>
-          <th>Price</th>
-          <th>Quantity</th>
+          <th>Sold</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let drug of drugs">
-          <td>
-            <input type="checkbox" #cb [checked]="selectedDrugIds.has(drug.id)" (change)="toggleDrug(drug.id, cb.checked)" />
-          </td>
           <td>{{ drug.name }}</td>
-          <td>{{ drug.price | number:'1.0-2' }}</td>
-          <td>{{ drug.quantity }}</td>
+          <td>{{ dealResult.sold[drug.id] || 0 }}</td>
         </tr>
       </tbody>
     </table>
-  </form>
-  <div class="actions">
-    <button type="button" (click)="onCancel()">Cancel</button>
-    <button type="button" (click)="onDeal()">Deal</button>
+    <div class="totals">
+      <div><strong>Total earned:</strong> ${{ dealResult.totalEarned }}</div>
+      <div><strong>Notoriety gained:</strong> {{ dealResult.notorietyGain }}</div>
+    </div>
   </div>
 </div>
