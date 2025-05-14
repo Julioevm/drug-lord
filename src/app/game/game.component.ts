@@ -43,5 +43,14 @@ export class GameComponent implements OnInit {
   gotoDealing() {
     this.viewMode = 'dealing';
   }
+
+  sleep() {
+    this.gameService.nextDay();
+    this.viewMode = 'summary';
+  }
+
+  getCurrentLocation() {
+    return this.gameService.getCurrentLocation();
+  }
 }
 

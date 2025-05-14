@@ -74,6 +74,10 @@ export class GameService {
     this.updatePlayer(player);
   }
 
+  getCurrentLocation() {
+    return this.gameState$.value.locations.find(loc => loc.id === this.getPlayer().location);
+  }
+
   /**
    * Randomize drug prices (fluctuate +/- 30% from base)
    */

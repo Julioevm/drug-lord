@@ -20,3 +20,7 @@ The application is an SPA video game based on the basic Drug Wars game where you
 - Map: Here the player can select an are where to move, moving costs 1 TU.
 
 - Dealing: This screens handles the player dealing drugs in the current area.
+
+### Data
+
+- game.models.ts: Holds most of the game data.

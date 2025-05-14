@@ -4,8 +4,7 @@
     <div *ngSwitchCase="'summary'" class="summary-screen">
       <h2>Drug Wars</h2>
       <div class="player-summary">
-        <div><strong>Day:</strong> {{ day }}</div>
-        <div><strong>Location:</strong> {{ player.location }}</div>
+        <div><strong>Day:</strong> {{ day }}, {{ getCurrentLocation()?.name }}</div>
         <div><strong>Clean Money:</strong> ${{ player.cleanMoney }}</div>
         <div><strong>Dirty Money:</strong> ${{ player.dirtyMoney }}</div>
         <div><strong>Notoriety:</strong> {{ player.notoriety }}</div>
@@ -16,6 +15,7 @@
         <button (click)="gotoMarket()">Market</button>
         <button (click)="gotoMap()">Map</button>
         <button (click)="gotoDealing()">Deal</button>
+        <button (click)="sleep()">Sleep (End Day)</button>
         <!-- Add more actions here -->
       </div>
     </div>
