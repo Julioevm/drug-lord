@@ -1,15 +1,26 @@
 @use '../../styles/_variables.scss' as *;
 @use '../../styles/_mixins.scss' as *;
 
-.dealing-container {
-  @include glass-container;
+.location-info {
+  display: flex;
+  gap: $spacing-xl;
+  margin: $spacing-md 0;
+  
+  p {
+    margin: 0;
+  }
 }
 
-.dealing-container h2 {
-  margin-top: 0;
-  font-size: 2rem;
-  text-align: center;
+h3.deal-summary {
+  margin-top: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  font-size: $font-size-2xl;
+  color: $color-text;
 }
+
+  h3 {
+    margin-bottom: $spacing-md;
+  }
 
 .drugs-table {
   @include table-base;
@@ -30,17 +41,16 @@
   margin-top: $spacing-lg;
 }
 
-.no-drugs-message {
+.info-message {
   text-align: center;
-  padding: $spacing-xl;
-  background: $color-bg-secondary;
+  padding: $spacing-lg;
+  background: rgba($color-bg-secondary, 0.5);
   border-radius: $radius-md;
   margin: $spacing-md 0;
 
   p {
     margin: 0;
-    color: #9da3af;
-    font-size: 1.1rem;
+    color: $color-text-muted;
   }
 }
 

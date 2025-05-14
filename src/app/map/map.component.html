@@ -1,11 +1,20 @@
-<div class="city-map">
-  <h2>City Map</h2>
+<div class="glass-container">
+  <h3>City Map</h3>
+  
+  <div class="info-message">
+    <p>Select a location to move to. Moving costs 1 Time Unit.</p>
+  </div>
   <div class="locations-list">
     <button *ngFor="let loc of locations" class="location-btn" (click)="onLocationClick(loc)">
-      <strong>{{ loc.name }}</strong>
-      <div>{{ loc.description }}</div>
-      <div>Demand: Quality x{{ loc.demandMultipliers['quality'] }}, Cheap x{{ loc.demandMultipliers['cheap'] }}</div>
-      <div>Police Heat: {{ loc.policeHeat }}</div>
+      <div class="location-header">
+        <strong>{{ loc.name }}</strong>
+        <span class="police-heat">Police Heat: {{ loc.policeHeat }}</span>
+      </div>
+      <p class="location-description">{{ loc.description }}</p>
+      <div class="demand-info">
+        <span>Quality Demand: x{{ loc.demandMultipliers['quality'] }}</span>
+        <span>Cheap Demand: x{{ loc.demandMultipliers['cheap'] }}</span>
+      </div>
     </button>
   </div>
 </div>
@@ -15,7 +24,7 @@
 
 <ng-template #dialog let-close="close">
   <div *ngIf="selectedLocation" ngpDialogOverlay>
-    <div ngpDialog>
+    <div ngpDialog class="glass-container">
       <h3 ngpDialogTitle>Move to {{ selectedLocation.name }}?</h3>
       <p ngpDialogDescription>This will cost you 1 Time Unit (TU).</p>
       <p>{{ selectedLocation.description }}</p>

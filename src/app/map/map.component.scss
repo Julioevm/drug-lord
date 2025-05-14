@@ -9,12 +9,13 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
+  margin-top: $spacing-lg;
 }
 
 .location-btn {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   background: $color-bg-secondary;
   color: $color-text-muted;
   border: 1px solid rgba($color-accent, 0.3);
@@ -23,14 +24,45 @@
   font-size: $font-size-base;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.18s, box-shadow 0.18s;
+  transition: all 0.18s ease-in-out;
   box-shadow: $shadow-sm;
-  margin-bottom: $spacing-xs;
+  text-align: left;
+
+  .location-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+
+    strong {
+      font-size: $font-size-lg;
+      color: $color-text;
+    }
+
+    .police-heat {
+      font-size: $font-size-sm;
+      color: $color-text-muted;
+    }
+  }
+
+  .location-description {
+    margin: $spacing-xs 0;
+    font-size: $font-size-base;
+    line-height: 1.4;
+  }
+
+  .demand-info {
+    display: flex;
+    gap: $spacing-lg;
+    margin-top: $spacing-sm;
+    font-size: $font-size-sm;
+  }
 
   &:hover {
     background: $color-bg-tertiary;
     border-color: rgba($color-accent, 0.5);
     box-shadow: $shadow-md;
+    transform: translateY(-1px);
   }
 }
 

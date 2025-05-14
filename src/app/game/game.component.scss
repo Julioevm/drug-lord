@@ -1,105 +1,29 @@
-/**
- * Enhanced Dark Theme for Drug Wars
- * Modern, vibrant, and glassy UI
- */
+@use '../../styles/_variables.scss' as *;
+@use '../../styles/_mixins.scss' as *;
 
-.summary-screen, .market-screen {
-  max-width: 600px;
-  margin: 40px auto;
-  background: rgba(34, 35, 43, 0.82);
-  border-radius: 18px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25), 0 1.5px 7px #0008;
-  padding: 2.2rem 2.7rem;
-  backdrop-filter: blur(10px);
-  border: 1.5px solid rgba(255,255,255,0.08);
-  position: relative;
-  overflow: hidden;
+.summary-screen {
+  @include glass-container;
 }
-.summary-screen::before, .market-screen::before {
-  content: '';
-  position: absolute;
-  top: -60px; left: -60px;
-  width: 180px; height: 180px;
-  background: radial-gradient(circle, #5d7cff44 0%, transparent 80%);
-  filter: blur(10px);
-  z-index: 0;
-}
+
 .player-summary {
   position: relative;
   z-index: 1;
-}
-.player-summary div {
-  margin-bottom: 0.7rem;
-  font-size: 1.09rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  
+  div {
+    margin-bottom: $spacing-sm;
+    font-size: $font-size-lg;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
 }
 
 .actions {
-  margin-top: 2.2rem;
+  margin-top: $spacing-xl;
   display: flex;
-  gap: 1.2rem;
+  gap: $spacing-md;
   z-index: 1;
 }
 
-button {
-  background: linear-gradient(90deg, #3a4367 0%, #2b3245 100%);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.75em 1.6em;
-  font-size: 1.08rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 8px #0003;
-  transition: background 0.18s, box-shadow 0.18s, transform 0.1s;
-  outline: none;
-  position: relative;
-  overflow: hidden;
-}
-button:hover, .back-btn:hover {
-  background: linear-gradient(90deg, #5d7cff 0%, #3a4367 100%);
-  box-shadow: 0 4px 16px #5d7cff33;
-  color: #fff;
-  transform: translateY(-2px) scale(1.03);
-}
-button:active {
-  background: linear-gradient(90deg, #2b3245 0%, #5d7cff 100%);
-  color: #a3b8ff;
-}
-.back-btn {
-  margin-bottom: 1.4rem;
-  background: linear-gradient(90deg, #23283a 0%, #23283a 100%);
-  color: #c7cfff;
-  font-weight: 500;
-  border-radius: 6px;
-  padding: 0.6em 1.2em;
-}
-
-/* Table styling for market */
-table {
-  width: 100%;
-  background: rgba(35, 36, 58, 0.92);
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 1.6rem;
-  border-collapse: collapse;
-  box-shadow: 0 3px 12px #0006;
-}
-th, td {
-  padding: 0.8em 0.6em;
-  text-align: left;
-  font-size: 1.04rem;
-}
-th {
-  background: linear-gradient(90deg, #282c36 0%, #3a4367 100%);
-  color: #b7c0d6;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-}
-td {
-  border-bottom: 1px solid #2e3140;
-}
 tr:last-child td {
   border-bottom: none;
 }

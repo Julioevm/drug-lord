@@ -1,16 +1,16 @@
-<div class="dealing-container">
-  <h2>Dealing</h2>
-  <div *ngIf="location">
-    <div><strong>Location:</strong> {{ location.name }}</div>
-    <div><strong>Police Activity:</strong> {{ policeHeat }}</div>
+<div *ngIf="location" class="glass-container">
+  <h3>Dealing in {{ location.name }}</h3>
+  
+  <div class="location-info">
+    <p><strong>Police Activity:</strong> {{ policeHeat }}</p>
+    <p><strong>Time Units Left:</strong> {{ timeUnits }}</p>
   </div>
-  <div><strong>Time Units Left:</strong> {{ timeUnits }}</div>
-  <div *ngIf="drugs.length === 0" class="no-drugs-message">
+
+  <div *ngIf="drugs.length === 0" class="info-message">
     <p>You don't have any drugs to sell. Visit the market to stock up!</p>
   </div>
 
   <ng-container *ngIf="drugs.length > 0">
-    <form>
       <table class="drugs-table">
         <thead>
           <tr>
@@ -31,13 +31,13 @@
           </tr>
         </tbody>
       </table>
-    </form>
+
     <div class="actions">
       <button type="button" (click)="onDeal()">Deal</button>
     </div>
   </ng-container>
 
-  <div *ngIf="dealResult" class="deal-summary">
+  <div *ngIf="dealResult" class="deal-summary glass-container">
     <h3>Deal Summary</h3>
     <table class="buyers-table">
       <thead>
