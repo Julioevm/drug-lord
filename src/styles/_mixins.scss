@@ -1,0 +1,87 @@
+@use 'variables' as *;
+
+// Glass container mixin
+@mixin glass-container {
+  max-width: $container-max-width;
+  margin: $spacing-xl auto;
+  background: $color-bg-glass;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg, 0 1.5px 7px rgba(0, 0, 0, 0.5);
+  padding: $container-padding;
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: -60px;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba($color-accent, 0.27) 0%, transparent 80%);
+    filter: blur(10px);
+    z-index: 0;
+  }
+}
+
+// Button styles
+@mixin button-base {
+  background: $gradient-button;
+  color: $color-text;
+  border: none;
+  border-radius: $radius-md;
+  padding: $spacing-sm $spacing-xl;
+  font-size: $font-size-lg;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: $shadow-sm;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.1s;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background: $gradient-button-hover;
+    box-shadow: $shadow-md;
+    transform: translateY(-2px) scale(1.03);
+  }
+
+  &:active {
+    background: linear-gradient(90deg, $color-bg-tertiary 0%, $color-accent 100%);
+    color: $color-accent-light;
+  }
+}
+
+// Table styles
+@mixin table-base {
+  width: 100%;
+  background: rgba($color-bg-secondary, 0.92);
+  border-radius: $radius-md;
+  overflow: hidden;
+  margin-bottom: $spacing-lg;
+  border-collapse: collapse;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+
+  th, td {
+    padding: $spacing-sm $spacing-md;
+    text-align: left;
+    font-size: $font-size-base;
+  }
+
+  th {
+    background: $gradient-table-header;
+    color: $color-text-muted;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  td {
+    border-bottom: 1px solid rgba($color-text, 0.1);
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+}

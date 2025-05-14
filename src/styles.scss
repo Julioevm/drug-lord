@@ -1,8 +1,36 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
 html {
-  background: linear-gradient(135deg, #181a20 0%, #23243a 100%);
-  color: #f1f1f1;
+  background: $gradient-bg;
+  color: $color-text;
   min-height: 100vh;
   font-family: 'Segoe UI', 'Arial', sans-serif;
   padding: 0;
   letter-spacing: 0.01em;
+}
+
+// Common button styles
+button {
+  @include button-base;
+}
+
+// Common table styles
+table {
+  @include table-base;
+}
+
+// Back button style
+.back-btn {
+  margin-bottom: $spacing-lg;
+  background: linear-gradient(90deg, darken($color-bg-secondary, 5%) 0%, darken($color-bg-secondary, 5%) 100%);
+  color: $color-text-muted;
+  font-weight: 500;
+  border-radius: $radius-sm;
+  padding: $spacing-xs $spacing-md;
+}
+
+// Common container style
+.glass-container {
+  @include glass-container;
 }
