@@ -23,4 +23,4 @@ The application is an SPA video game based on the basic Drug Wars game where you
 
 ### Data
 
-- game.models.ts: Holds most of the game data.
+- game.models.ts: Holds most of the game data. Typescript types.

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { GameState, Player, Drug, Upgrade, Location, GameEvent, LOCATIONS } from './models/game.models';
+import { GameState, Player, Drug, Upgrade, Location, GameEvent, LOCATIONS, Buyer } from './models/game.models';
+
 
 const INITIAL_DRUGS: Drug[] = [
   { id: 'weed', name: 'Weed', basePrice: 100, price: 100, quantity: 0 },
@@ -133,6 +134,93 @@ export class GameService {
     const player = { ...this.getPlayer(), timeUnits: 6 };
     const state = { ...this.gameState$.value, day: this.gameState$.value.day + 1, player };
     this.gameState$.next(state);
+  }
+
+  /**
+   * Process a drug deal action: determines buyers, drugs sold, updates player, and returns deal result.
+   * @param selectedDrugIds Set of drug IDs selected for dealing
+   * @returns { sold: { [drugId: string]: number }, notorietyGain: number, totalEarned: number, buyers: Buyer[] }
+   */
+  processDeal(selectedDrugIds: Set<string>) {
+    const player = this.getPlayer();
+    const location = this.getCurrentLocation();
+    if (!player || !location) return null;
+    // 1. Determine number of buyers: 1-3 + notoriety bonus
+    const notoriety = player.notoriety;
+    const baseBuyers = Math.floor(Math.random() * 3) + 1;
+    const bonusBuyers = Math.floor(notoriety / 10); // Every 10 notoriety, +1 buyer
+    const numBuyers = baseBuyers + bonusBuyers;
+    // 2. For each buyer, pick preferred and (maybe) secondary drug based on location demand
+    const drugs = this.gameState$.value.drugs
+      .map(drug => ({ ...drug, quantity: player.inventory[drug.id] || 0 }))
+      .filter(drug => drug.quantity > 0);
+    const drugIds = drugs.filter(d => selectedDrugIds.has(d.id)).map(d => d.id);
+    const demand = location.demandMultipliers;
+    const buyers: Buyer[] = [];
+    for (let i = 0; i < numBuyers; i++) {
+      const availableDrugs = drugIds.filter(id => Math.random() < (demand[id] || 0));
+      if (availableDrugs.length === 0) continue;
+      const preferred = availableDrugs[Math.floor(Math.random() * availableDrugs.length)];
+      let secondary: string | undefined = undefined;
+      if (Math.random() < 0.4 && availableDrugs.length > 1) {
+        const others = availableDrugs.filter(id => id !== preferred);
+        secondary = others[Math.floor(Math.random() * others.length)];
+      }
+      buyers.push({ preferred, secondary, bought: null });
+    }
+    // 3. Process sales
+    const sold: { [drugId: string]: number } = {};
+    let notorietyGain = 0;
+    let totalEarned = 0;
+    const playerCopy: Player = JSON.parse(JSON.stringify(player));
+    for (const buyer of buyers) {
+      let boughtDrug: string | null = null;
+      for (const tryDrug of [buyer.preferred, buyer.secondary]) {
+        if (!tryDrug) continue;
+        if (selectedDrugIds.has(tryDrug) && playerCopy.inventory[tryDrug] > 0) {
+          playerCopy.inventory[tryDrug] -= 1;
+          sold[tryDrug] = (sold[tryDrug] || 0) + 1;
+          const drugObj = drugs.find(d => d.id === tryDrug);
+          if (drugObj) {
+            const salePrice = this.getSalePrice(drugObj, location);
+            playerCopy.dirtyMoney += salePrice;
+            totalEarned += salePrice;
+          }
+          boughtDrug = tryDrug;
+          notorietyGain += 1;
+          break;
+        }
+      }
+      buyer.bought = boughtDrug;
+    }
+    // 4. Update player state
+    playerCopy.notoriety += notorietyGain;
+    playerCopy.timeUnits = Math.max(0, playerCopy.timeUnits - 1);
+    this.updatePlayer(playerCopy);
+    // 5. Return result for UI
+    return { sold, notorietyGain, totalEarned, buyers };
+  }
+
+  /**
+   * Calculate sale price for a drug at a given location
+   */
+  getSalePrice(drug: Drug, location?: Location): number {
+    if (!location) return drug.price;
+    const markup = location.priceMarkup[drug.id] || 1;
+    return Math.round(drug.price * markup);
+  }
+
+  /**
+   * Weighted random selection utility
+   */
+  weightedRandom(items: string[], weights: number[]): string {
+    const total = weights.reduce((a, b) => a + b, 0);
+    let r = Math.random() * total;
+    for (let i = 0; i < items.length; i++) {
+      if (r < weights[i]) return items[i];
+      r -= weights[i];
+    }
+    return items[0];
   }
 }
 

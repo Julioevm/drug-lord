@@ -160,3 +160,9 @@ export interface GameState {
   locations: Location[];
   events: GameEvent[];
 }
+
+export interface Buyer {
+  preferred: string;
+  secondary?: string;
+  bought: string | null;
+}
