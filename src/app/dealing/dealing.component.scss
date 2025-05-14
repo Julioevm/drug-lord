@@ -1,0 +1,66 @@
+.dealing-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #181a20;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0006;
+  padding: 2rem;
+  color: #f3f3f3;
+}
+
+.dealing-container h2 {
+  margin-top: 0;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.drugs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.drugs-table th, .drugs-table td {
+  padding: 0.6rem 1rem;
+  text-align: left;
+}
+
+.drugs-table th {
+  background: #22242a;
+}
+
+.drugs-table tr:nth-child(even) {
+  background: #23262c;
+}
+
+.drugs-table tr:nth-child(odd) {
+  background: #1a1c22;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+button {
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button[type="button"]:first-child {
+  background: #b71c1c;
+}
+
+button:hover {
+  background: #388e3c;
+}
+button[type="button"]:first-child:hover {
+  background: #c62828;
+}

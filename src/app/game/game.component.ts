@@ -5,18 +5,19 @@ import { Player } from '../models/game.models';
 import { MarketComponent } from '../market/market.component';
 import { MapComponent } from '../map/map.component';
 import { ValuesSumPipe } from '../pipes/values-sum.pipe';
+import { DealingComponent } from '../dealing/dealing.component';
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, MarketComponent, MapComponent, ValuesSumPipe],
+  imports: [CommonModule, MarketComponent, MapComponent, ValuesSumPipe, DealingComponent],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
   player: Player | null = null;
   day: number = 1;
-  viewMode: 'summary' | 'market' | 'map' = 'summary';
+  viewMode: 'summary' | 'market' | 'map' | 'dealing' = 'summary';
 
   constructor(private gameService: GameService) {}
 
@@ -37,6 +38,10 @@ export class GameComponent implements OnInit {
 
   gotoMap() {
     this.viewMode = 'map';
+  }
+
+  gotoDealing() {
+    this.viewMode = 'dealing';
   }
 }
 

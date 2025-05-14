@@ -13,8 +13,9 @@
         <div><strong>Time Units Left:</strong> {{ player.timeUnits }}</div>
       </div>
       <div class="actions">
-        <button (click)="gotoMarket()">Go to Market</button>
+        <button (click)="gotoMarket()">Market</button>
         <button (click)="gotoMap()">Map</button>
+        <button (click)="gotoDealing()">Deal</button>
         <!-- Add more actions here -->
       </div>
     </div>
@@ -27,6 +28,11 @@
     <div *ngSwitchCase="'map'" class="map-screen">
       <button class="back-btn" (click)="gotoSummary()">&larr; Back to Summary</button>
       <app-map (moveConfirmed)="gotoSummary()"></app-map>
+    </div>
+    <!-- Dealing Screen -->
+    <div *ngSwitchCase="'dealing'" class="dealing-screen">
+      <button class="back-btn" (click)="gotoSummary()">&larr; Back to Summary</button>
+      <app-dealing></app-dealing>
     </div>
   </ng-container>
 </div>
