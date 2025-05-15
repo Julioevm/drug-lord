@@ -3,6 +3,10 @@
 
 .summary-screen {
   @include glass-container;
+
+  h2 {
+    margin-top: 0;
+  }
 }
 
 .player-summary {
