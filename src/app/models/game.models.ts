@@ -161,6 +161,14 @@ export interface GameState {
   events: GameEvent[];
 }
 
+export interface Log {
+  timestamp: string;
+  location: string;
+  day: number;
+  type: 'purchase' | 'deal' | 'event';
+  message: string;
+}
+
 export interface Buyer {
   preferred: string;
   secondary?: string;

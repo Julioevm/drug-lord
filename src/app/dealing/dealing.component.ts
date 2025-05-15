@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Drug, Location, Player } from '../models/game.models';
+import { Drug, Location, Player, Log } from '../models/game.models';
 import { GameService } from '../game.service';
 
 interface Buyer {
@@ -34,11 +34,14 @@ export class DealingComponent implements OnInit {
   selectedDrugIds: Set<string> = new Set();
   buyers: Buyer[] = [];
   dealResult: { sold: { [drugId: string]: number }; notorietyGain: number; totalEarned: number } | null = null;
+  dealLogs: Log[] = [];
+  currentDay: number = 1;
 
   constructor(private gameService: GameService) {}
 
   ngOnInit() {
     this.gameService.getGameState().subscribe(state => {
+      this.currentDay = state.day;
       this.player = state.player;
       this.location = state.locations.find(l => l.id === this.player?.location) || null;
       // Only show drugs the player has in inventory
@@ -72,6 +75,17 @@ export class DealingComponent implements OnInit {
         totalEarned: result.totalEarned
       };
       this.buyers = result.buyers;
+
+      // Create and store the deal log
+      const logMessage = Object.entries(result.sold).length > 0 ? `Sold ${Object.entries(result.sold).map(([drugId, quantity]) => `${quantity} ${this.getDrugName(drugId)}`).join(', ')} for $${result.totalEarned}` : 'Found no buyers.';
+      const dealLog: Log = {
+        timestamp: new Date().toLocaleTimeString(),
+        location: this.location?.name || 'Unknown',
+        day: this.currentDay,
+        type: 'deal',
+        message: logMessage
+      };
+      this.dealLogs.unshift(dealLog); // Add to beginning of array
     }
   }
 }
