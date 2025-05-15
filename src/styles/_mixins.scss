@@ -13,6 +13,10 @@
   position: relative;
   overflow: hidden;
 
+  @media (max-width: 600px) {
+    padding: $container-padding-mobile;
+  }
+
   &::before {
     content: '';
     position: absolute;

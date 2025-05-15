@@ -61,3 +61,16 @@ h2 {
   color: #7eaaff;
   text-shadow: 0 2px 12px #5d7cff22;
 }
+// Responsive tweaks for mobile screens
+@media (max-width: 600px) {
+  .actions {
+    flex-direction: column;
+    gap: $spacing-sm;
+    margin-top: $spacing-lg;
+  }
+  .actions button {
+    width: 100%;
+    min-width: 0;
+    padding: $spacing-xs $spacing-md;
+  }
+}
