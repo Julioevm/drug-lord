@@ -68,10 +68,18 @@
   border-collapse: collapse;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
 
+  @media (max-width: 450px) {
+    margin-left: -14px;
+  }
+
   th, td {
     padding: $spacing-sm $spacing-md;
     text-align: left;
     font-size: $font-size-base;
+
+    @media (max-width: 600px) {
+      padding: $spacing-xs $spacing-sm;
+    }
   }
 
   th {
