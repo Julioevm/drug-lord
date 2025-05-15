@@ -1,6 +1,8 @@
 <div *ngIf="location" class="glass-container">
-  <button class="back-btn" (click)="onBackClick()">&larr; Back</button>
-  <h3>Dealing in {{ location.name }}</h3>
+  <div class="header-row">
+    <h3>Dealing in {{ location.name }}</h3>
+    <button class="back-btn" (click)="onBackClick()">&larr; Back</button>
+  </div>
   
   <div class="location-info">
     <p><strong>Police Activity:</strong> {{ policeHeat }}</p>

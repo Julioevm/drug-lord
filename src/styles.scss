@@ -23,7 +23,6 @@ table {
 
 // Back button style
 .back-btn {
-  margin-bottom: $spacing-lg;
   background: linear-gradient(90deg, color.adjust($color-bg-secondary, $lightness: -5%) 0%, color.adjust($color-bg-secondary, $lightness: -5%) 100%);
   color: $color-text-muted;
   font-weight: 500;
@@ -34,4 +33,15 @@ table {
 // Common container style
 .glass-container {
   @include glass-container;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+
+  h3 {
+    margin: 0;
+  }
 }
