@@ -16,6 +16,7 @@ import { QuantityInputComponent } from '../ui/quantity-input/quantity-input.comp
 export class MarketComponent {
   @Output() backToSummary = new EventEmitter<void>();
   drugs: Drug[] = [];
+  availableDrugs: Drug[] = [];
   player: Player | null = null;
   errorMsg: string = '';
   payWith: 'dirty' | 'clean' = 'dirty';
@@ -24,6 +25,7 @@ export class MarketComponent {
     this.gameService.getGameState().subscribe(state => {
       this.drugs = state.drugs;
       this.player = state.player;
+      this.availableDrugs = this.drugs.filter(drug => drug.minNotoriety ? this.player!.notoriety >= drug.minNotoriety : true);
     });
   }
 

@@ -1,12 +1,15 @@
 // Core interfaces for Drug Wars game
 
+export type DrugId = 'weed' | 'cocaine' | 'heroin' | 'meth' | 'ecstasy';
+
 export interface Drug {
-  id: string;
+  id: DrugId;
   name: string;
   basePrice: number;
   price: number; // Current fluctuating price
   quantity: number;
   amount?: number; // UI only: selected buy amount
+  minNotoriety?: number; // Minimum notoriety to buy this drug
 }
 
 export interface Upgrade {
@@ -29,6 +32,17 @@ export interface Location {
   };
   policeHeat: number; // 0-100
 }
+
+export const DRUGS: Drug[] = [
+  { id: 'weed', name: 'Weed', basePrice: 100, price: 100, quantity: 0, minNotoriety: 0 },
+  { id: 'cocaine', name: 'Cocaine', basePrice: 1000, price: 1000, quantity: 0, minNotoriety: 20 },
+  { id: 'meth', name: 'Meth', basePrice: 800, price: 800, quantity: 0, minNotoriety: 10 },
+  { id: 'ecstasy', name: 'Ecstasy', basePrice: 500, price: 500, quantity: 0, minNotoriety: 30 },
+];
+
+export const UPGRADES: Upgrade[] = [
+  { id: 'backpack', name: 'Backpack', description: 'Increase inventory by 10', cost: 500, effect: 'inventory+10' }
+];
 
 export const LOCATIONS: Location[] = [
   {

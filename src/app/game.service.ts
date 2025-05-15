@@ -1,18 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { GameState, Player, Drug, Upgrade, Location, GameEvent, LOCATIONS, Buyer } from './models/game.models';
-
-
-const INITIAL_DRUGS: Drug[] = [
-  { id: 'weed', name: 'Weed', basePrice: 100, price: 100, quantity: 0 },
-  { id: 'coke', name: 'Cocaine', basePrice: 1000, price: 1000, quantity: 0 },
-  { id: 'heroin', name: 'Heroin', basePrice: 800, price: 800, quantity: 0 },
-  { id: 'acid', name: 'Acid', basePrice: 300, price: 300, quantity: 0 }
-];
-
-const INITIAL_UPGRADES: Upgrade[] = [
-  { id: 'backpack', name: 'Backpack', description: 'Increase inventory by 10', cost: 500, effect: 'inventory+10' }
-];
+import { GameState, Player, Drug, Upgrade, Location, GameEvent, LOCATIONS, Buyer, DRUGS, UPGRADES } from './models/game.models';
 
 const INITIAL_PLAYER: Player = {
   inventory: { weed: 0, coke: 0, heroin: 0, acid: 0 },
@@ -29,8 +17,8 @@ const INITIAL_PLAYER: Player = {
 const INITIAL_STATE: GameState = {
   player: INITIAL_PLAYER,
   day: 1,
-  drugs: INITIAL_DRUGS,
-  upgrades: INITIAL_UPGRADES,
+  drugs: DRUGS,
+  upgrades: UPGRADES,
   locations: LOCATIONS,
   events: []
 };
