@@ -61,25 +61,3 @@ h3 {
     color: $color-text-muted;
   }
 }
-
-button {
-  background: #2e7d32;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.7rem 1.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-button[type="button"]:first-child {
-  background: #b71c1c;
-}
-
-button:hover {
-  background: #388e3c;
-}
-button[type="button"]:first-child:hover {
-  background: #c62828;
-}

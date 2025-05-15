@@ -25,6 +25,7 @@ export class MapComponent {
 
   @ViewChild('dialogTrigger', { static: false }) dialogTrigger!: ElementRef<HTMLButtonElement>;
   @Output() moveConfirmed = new EventEmitter<void>();
+  @Output() backToSummary = new EventEmitter<void>();
 
   constructor(private gameService: GameService) {}
 
@@ -56,6 +57,10 @@ export class MapComponent {
     this.selectedLocation = null;
     this.error = null;
     if (close) close();
+  }
+
+  onBackClick() {
+    this.backToSummary.emit();
   }
 }
 

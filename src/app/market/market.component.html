@@ -1,4 +1,5 @@
 <div *ngIf="player" class="market-container">
+  <button class="back-btn" (click)="onBackClick()">&larr; Back</button>
   <h3>Market</h3>
   <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
 

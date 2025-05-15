@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Drug, Location, Player, Log } from '../models/game.models';
 import { GameService } from '../game.service';
@@ -17,6 +17,7 @@ interface Buyer {
   styleUrls: ['./dealing.component.scss']
 })
 export class DealingComponent implements OnInit {
+  @Output() backToSummary = new EventEmitter<void>();
   getSalePrice(drug: Drug): number {
     return this.gameService.getSalePrice(drug, this.location!);
   }
@@ -87,5 +88,9 @@ export class DealingComponent implements OnInit {
       };
       this.dealLogs.unshift(dealLog); // Add to beginning of array
     }
+  }
+
+  onBackClick() {
+    this.backToSummary.emit();
   }
 }

@@ -21,18 +21,15 @@
     </div>
     <!-- Market Screen -->
     <div *ngSwitchCase="'market'" class="market-screen">
-      <button class="back-btn" (click)="gotoSummary()">&larr; Back</button>
-      <app-market></app-market>
+      <app-market (backToSummary)="gotoSummary()"></app-market>
     </div>
     <!-- Map Screen -->
     <div *ngSwitchCase="'map'" class="map-screen">
-      <button class="back-btn" (click)="gotoSummary()">&larr; Back</button>
-      <app-map (moveConfirmed)="gotoSummary()"></app-map>
+      <app-map (moveConfirmed)="gotoSummary()" (backToSummary)="gotoSummary()"></app-map>
     </div>
     <!-- Dealing Screen -->
     <div *ngSwitchCase="'dealing'" class="dealing-screen">
-      <button class="back-btn" (click)="gotoSummary()">&larr; Back</button>
-      <app-dealing></app-dealing>
+      <app-dealing (backToSummary)="gotoSummary()"></app-dealing>
     </div>
   </ng-container>
 </div>

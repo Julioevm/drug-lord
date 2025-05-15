@@ -1,13 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../game.service';
 import { Drug, Player } from '../models/game.models';
 import { ValuesSumPipe } from '../pipes/values-sum.pipe';
 import { QuantityInputComponent } from '../ui/quantity-input/quantity-input.component';
-
-// Extend GameService to support dirty/clean money buying
-// You will also need to update GameService accordingly.
 
 @Component({
   selector: 'app-market',
@@ -17,6 +14,7 @@ import { QuantityInputComponent } from '../ui/quantity-input/quantity-input.comp
   styleUrls: ['./market.component.scss']
 })
 export class MarketComponent {
+  @Output() backToSummary = new EventEmitter<void>();
   drugs: Drug[] = [];
   player: Player | null = null;
   errorMsg: string = '';
@@ -88,6 +86,10 @@ export class MarketComponent {
       }
     }
     this.errorMsg = error;
+  }
+  
+  onBackClick() {
+    this.backToSummary.emit();
   }
 }
 
