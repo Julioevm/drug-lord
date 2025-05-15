@@ -15,7 +15,7 @@
         <button (click)="gotoMarket()">Market</button>
         <button (click)="gotoMap()">Map</button>
         <button (click)="gotoDealing()">Deal</button>
-        <button (click)="sleep()">Sleep (End Day)</button>
+        <button (click)="checkSleep()">Sleep</button>
         <!-- Add more actions here -->
       </div>
     </div>
@@ -33,3 +33,19 @@
     </div>
   </ng-container>
 </div>
+
+<!-- Hidden trigger for dialog -->
+<button #dialogTrigger style="display:none" [ngpDialogTrigger]="dialog"></button>
+
+<ng-template #dialog let-close="close">
+  <div ngpDialogOverlay>
+    <div ngpDialog class="glass-container">
+      <h3 ngpDialogTitle>End Day?</h3>
+      <p ngpDialogDescription>Are you sure you want to end the day? You have {{ player?.timeUnits }} Time Units left.</p>
+      <div style="display: flex; gap: 1.2rem; margin-top: 1.1rem;">
+        <button (click)="confirmSleep(close)">Confirm</button>
+        <button (click)="close()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
