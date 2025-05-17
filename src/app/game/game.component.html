@@ -11,6 +11,11 @@
         <div><strong>Inventory:</strong> {{ (player.inventory | valuesSum) }}/{{ player.inventoryLimit }}</div>
         <div><strong>Time Units Left:</strong> {{ player.timeUnits }}</div>
       </div>
+      <!-- No TU warning message -->
+      <div *ngIf="player && player.timeUnits === 0" class="warning">
+        <p>You're out of Time Units! Sleep to start a new day.</p>
+      </div>
+      
       <div class="actions">
         <button (click)="gotoMarket()">Market</button>
         <button (click)="gotoMap()">Map</button>

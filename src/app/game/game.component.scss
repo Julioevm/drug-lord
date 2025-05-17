@@ -47,6 +47,27 @@ input[type="number"]:focus {
   outline: none;
   box-shadow: 0 0 8px #5d7cff55;
 }
+
+.warning {
+  margin-top: $spacing-md;
+  padding: $spacing-sm $spacing-md;
+  background-color: rgba(255, 193, 7, 0.1);
+  border-left: 4px solid #ffc107;
+  border-radius: 4px;
+  
+  p {
+    margin: 0;
+    color: #ffd54f;
+    font-style: italic;
+    font-size: 0.9em;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
 .error {
   color: #ff6f6f;
   margin-bottom: 1.1rem;
