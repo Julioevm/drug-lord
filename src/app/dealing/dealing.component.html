@@ -36,7 +36,7 @@
       </table>
 
     <div class="actions">
-      <button type="button" (click)="onDeal()">Deal</button>
+      <button type="button" (click)="onDeal()" [disabled]="timeUnits <= 0">Deal</button>
     </div>
   </ng-container>
 

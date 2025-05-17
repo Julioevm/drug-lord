@@ -142,7 +142,7 @@ export class GameService {
   processDeal(selectedDrugIds: Set<string>) {
     const player = this.getPlayer();
     const location = this.getCurrentLocation();
-    if (!player || !location) return null;
+    if (!player || !location || player.timeUnits < 1) return null;
     // 1. Determine number of buyers: 1-3 + notoriety bonus
     const notoriety = player.notoriety;
     const baseBuyers = Math.floor(Math.random() * 3) + 1;
