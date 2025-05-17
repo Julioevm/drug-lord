@@ -69,12 +69,20 @@ export class MarketComponent {
   }
 
   get canBuy(): boolean {
-    return this.totalCost > 0 && !this.overMoney && !this.overSpace;
+    return this.totalCost > 0 && !this.overMoney && !this.overSpace && (this.player?.timeUnits || 0) > 0;
+  }
+
+  get noTimeUnitsLeft(): boolean {
+    return (this.player?.timeUnits || 0) <= 0;
   }
 
   buyAll() {
-    if (!this.player) return;
-    if (!this.canBuy) return;
+    if (!this.player || !this.canBuy) return;
+    
+    // Consume one Time Unit for the market action
+    const player = { ...this.player, timeUnits: this.player.timeUnits - 1 };
+    this.gameService.updatePlayer(player);
+    
     // For each drug, buy the selected amount
     let error = '';
     for (const drug of this.drugs) {

@@ -67,6 +67,36 @@ table {
   @include glass-container;
 }
 
+.warning {
+  margin-top: $spacing-md;
+  padding: $spacing-sm $spacing-md;
+  background-color: rgba(255, 193, 7, 0.1);
+  border-left: 4px solid #ffc107;
+  border-radius: 4px;
+  
+  p {
+    margin: 0;
+    color: #ffd54f;
+    font-style: italic;
+    font-size: 0.9em;
+  } 
+}
+
+.error {
+  margin: $spacing-md 0;
+  padding: $spacing-sm $spacing-md;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-left: 4px solid #ff3e3e;
+  border-radius: 4px;
+  
+  p {
+    margin: 0;
+    color: #ff6f6f;
+    font-weight: 500;
+  }
+}
+
+
 .header-row {
   display: flex;
   align-items: center;

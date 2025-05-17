@@ -42,6 +42,10 @@
     <span [ngClass]="{ 'over-limit': overSpace }">Total Quantity: {{ totalAmount }}</span>
   </div>
 
+  <div *ngIf="noTimeUnitsLeft" class="error">
+    <p>You're out of Time Units! Sleep to continue.</p>
+  </div>
+  
   <button 
     (click)="buyAll()" 
     [disabled]="!canBuy"
@@ -53,5 +57,6 @@
     <p><strong>Dirty Money:</strong> ${{ player.dirtyMoney }}</p>
     <p><strong>Notoriety:</strong> {{ player.notoriety }}</p>
     <p><strong>Inventory:</strong> {{ (player.inventory | valuesSum) }}/{{ player.inventoryLimit }}</p>
+    <p><strong>Time Units:</strong> {{ player.timeUnits }}</p>
   </div>
 </div>
