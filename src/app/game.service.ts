@@ -23,11 +23,18 @@ const INITIAL_STATE: GameState = {
   events: []
 };
 
+// Storage key for saving game state
+const STORAGE_KEY = 'drug-lord-game-state';
+
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
   private gameState$ = new BehaviorSubject<GameState>({ ...INITIAL_STATE });
+
+  constructor() {
+    this.loadGameState();
+  }
 
   /**
    * Move the player to a new location if they have enough time units (TU).
@@ -56,6 +63,7 @@ export class GameService {
   updatePlayer(player: Player) {
     const state = { ...this.gameState$.value, player };
     this.gameState$.next(state);
+    this.saveGameState();
   }
 
   spendTime(units: number) {
@@ -77,6 +85,7 @@ export class GameService {
     });
     const state = { ...this.gameState$.value, drugs };
     this.gameState$.next(state);
+    this.saveGameState();
   }
 
   /**
@@ -122,6 +131,7 @@ export class GameService {
     const player = { ...this.getPlayer(), timeUnits: 6 };
     const state = { ...this.gameState$.value, day: this.gameState$.value.day + 1, player };
     this.gameState$.next(state);
+    this.saveGameState();
   }
 
   /**
@@ -209,6 +219,43 @@ export class GameService {
       r -= weights[i];
     }
     return items[0];
+  }
+
+  /**
+   * Save the current game state to localStorage
+   */
+  private saveGameState(): void {
+    try {
+      const serializedState = JSON.stringify(this.gameState$.value);
+      localStorage.setItem(STORAGE_KEY, serializedState);
+    } catch (error) {
+      console.error('Failed to save game state to localStorage:', error);
+    }
+  }
+
+  /**
+   * Load game state from localStorage, or initialize with default state if not found
+   */
+  private loadGameState(): void {
+    try {
+      const savedState = localStorage.getItem(STORAGE_KEY);
+      if (savedState) {
+        const parsedState = JSON.parse(savedState);
+        this.gameState$.next(parsedState);
+      }
+    } catch (error) {
+      console.error('Failed to load game state from localStorage:', error);
+      // If there's an error loading, use initial state
+      this.resetGameState();
+    }
+  }
+
+  /**
+   * Reset game state to initial values and clear localStorage
+   */
+  resetGameState(): void {
+    localStorage.removeItem(STORAGE_KEY);
+    this.gameState$.next({ ...INITIAL_STATE });
   }
 }
 
